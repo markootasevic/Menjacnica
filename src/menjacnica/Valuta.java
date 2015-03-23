@@ -27,7 +27,7 @@ public class Valuta {
 
 	public void setSkraceniNaziv(String skraceniNaziv) {
 		if(skraceniNaziv.length() != 3)
-			throw new RuntimeException("Nije unet skraceni naziv");
+			throw new RuntimeException("Skraceni naziv nije pravilno unet(mora da sadrzi 3 slova)");
 		this.skraceniNaziv = skraceniNaziv;
 	}
 
