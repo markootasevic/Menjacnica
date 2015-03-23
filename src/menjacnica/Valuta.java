@@ -1,5 +1,6 @@
 package menjacnica;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Valuta {
@@ -8,7 +9,8 @@ public class Valuta {
 	private String skraceniNaziv;
 	private GregorianCalendar datum;
 	private double kupovniKurs;
-	private double srednjiKurs;
+	private double srednjiKurs; // ovaj kurs se ne unosi vec se racuna na osnovu
+								// kupovnog i prodajnog
 	private double prodajniKurs;
 
 	public String getNaziv() {
@@ -16,7 +18,7 @@ public class Valuta {
 	}
 
 	public void setNaziv(String naziv) {
-		if(naziv.length() == 0 || naziv.equals(null))
+		if (naziv.length() == 0 || naziv.equals(null))
 			throw new RuntimeException("Nije unet naziv");
 		this.naziv = naziv;
 	}
@@ -26,8 +28,9 @@ public class Valuta {
 	}
 
 	public void setSkraceniNaziv(String skraceniNaziv) {
-		if(skraceniNaziv.length() != 3)
-			throw new RuntimeException("Skraceni naziv nije pravilno unet(mora da sadrzi 3 slova)");
+		if (skraceniNaziv.length() != 3)
+			throw new RuntimeException(
+					"Skraceni naziv nije pravilno unet(mora da sadrzi 3 slova)");
 		this.skraceniNaziv = skraceniNaziv;
 	}
 
@@ -36,8 +39,12 @@ public class Valuta {
 	}
 
 	public void setDatum(GregorianCalendar datum) {
-		if(datum.after(new GregorianCalendar()))
-			throw new RuntimeException("Nije moguce uneti kurs za dan koji je u buducnosti");
+		GregorianCalendar danas = new GregorianCalendar();
+		if (danas.get(Calendar.YEAR) == datum.get(Calendar.YEAR)
+				&& danas.get(Calendar.DAY_OF_YEAR) == datum
+						.get(Calendar.DAY_OF_YEAR))
+			throw new RuntimeException(
+					"Nije moguce uneti kurs za dan koji je u buducnosti ili u proslosti,vec se mora uneti na dati dan");
 		this.datum = datum;
 	}
 
@@ -46,7 +53,7 @@ public class Valuta {
 	}
 
 	public void setKupovniKurs(double kupovniKurs) {
-		if(kupovniKurs <= 0)
+		if (kupovniKurs <= 0)
 			throw new RuntimeException("Nije odgovarajuci kurs");
 		this.kupovniKurs = kupovniKurs;
 	}
@@ -56,7 +63,7 @@ public class Valuta {
 	}
 
 	public void setSrednjiKurs(double srednjiKurs) {
-		if(srednjiKurs <= 0)
+		if (srednjiKurs <= 0)
 			throw new RuntimeException("Nije odgovarajuci kurs");
 		this.srednjiKurs = srednjiKurs;
 	}
@@ -66,7 +73,7 @@ public class Valuta {
 	}
 
 	public void setProdajniKurs(double prodajniKurs) {
-		if(prodajniKurs <= 0)
+		if (prodajniKurs <= 0)
 			throw new RuntimeException("Nije odgovarajuci kurs");
 		this.prodajniKurs = prodajniKurs;
 	}
@@ -83,12 +90,18 @@ public class Valuta {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj) { // poredi samo datum i skraceni ili
+										// pravi naziv jer je nebitan kurs kada
+										// trazimo neku valutu na odredjen dan
 		if (!(obj instanceof Valuta))
 			return false;
 
 		Valuta valuta = (Valuta) obj;
-		if (valuta.getDatum().equals(datum)
+		GregorianCalendar valutaDan = valuta.getDatum();
+		GregorianCalendar danas = new GregorianCalendar();
+		if (danas.get(Calendar.YEAR) == valutaDan.get(Calendar.YEAR)
+				&& danas.get(Calendar.DAY_OF_YEAR) == valutaDan
+						.get(Calendar.DAY_OF_YEAR)
 				&& (valuta.getNaziv().equals(naziv) || valuta
 						.getSkraceniNaziv().equals(skraceniNaziv)))
 			return true;
@@ -104,6 +117,5 @@ public class Valuta {
 				+ ", srednjiKurs=" + srednjiKurs + ", prodajniKurs="
 				+ prodajniKurs + "]";
 	}
-	
-	
+
 }

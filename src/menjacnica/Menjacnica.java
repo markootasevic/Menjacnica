@@ -1,6 +1,5 @@
 package menjacnica;
 
-
 import java.util.GregorianCalendar;
 
 import java.util.LinkedList;
@@ -11,8 +10,6 @@ public class Menjacnica implements MenjacnicaInterfejs {
 
 	public LinkedList<Valuta> valuta = new LinkedList<Valuta>();
 
-	
-
 	@Override
 	public void dodajKurs(double prodajni, double kupovni,
 			GregorianCalendar dan, String naziv, String skraceniNaziv) {
@@ -22,8 +19,7 @@ public class Menjacnica implements MenjacnicaInterfejs {
 		v.setProdajniKurs(prodajni);
 		v.setNaziv(naziv);
 		v.setSkraceniNaziv(skraceniNaziv);
-		double srednji = (prodajni + kupovni) / 2;
-		v.setSrednjiKurs(srednji);
+		v.setSrednjiKurs((prodajni + kupovni) / 2);
 		valuta.add(v);
 
 	}
@@ -35,11 +31,10 @@ public class Menjacnica implements MenjacnicaInterfejs {
 		v.setDatum(dan);
 		v.setNaziv(naziv);
 		for (int i = 0; i < valuta.size(); i++) {
-			if(valuta.get(i).equals(v))
+			if (valuta.get(i).equals(v))
 				valuta.remove(i);
 		}
 
-		
 	}
 
 	@Override
@@ -48,14 +43,11 @@ public class Menjacnica implements MenjacnicaInterfejs {
 		Valuta v = new Valuta();
 		v.setDatum(dan);
 		v.setNaziv(naziv);
-		for(int i = 0;i < valuta.size(); i++) {
-			if(valuta.get(i).equals(v))
+		for (int i = 0; i < valuta.size(); i++) {
+			if (valuta.get(i).equals(v))
 				System.out.println(valuta.get(i));
 		}
 
-		
 	}
-
-
 
 }
