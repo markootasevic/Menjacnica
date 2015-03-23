@@ -16,6 +16,8 @@ public class Valuta {
 	}
 
 	public void setNaziv(String naziv) {
+		if(naziv.length() == 0 || naziv.equals(null))
+			throw new RuntimeException("Nije unet naziv");
 		this.naziv = naziv;
 	}
 
@@ -24,6 +26,8 @@ public class Valuta {
 	}
 
 	public void setSkraceniNaziv(String skraceniNaziv) {
+		if(skraceniNaziv.length() != 3)
+			throw new RuntimeException("Nije unet skraceni naziv");
 		this.skraceniNaziv = skraceniNaziv;
 	}
 
@@ -32,6 +36,8 @@ public class Valuta {
 	}
 
 	public void setDatum(GregorianCalendar datum) {
+		if(datum.after(new GregorianCalendar()))
+			throw new RuntimeException("Nije moguce uneti kurs za dan koji je u buducnosti");
 		this.datum = datum;
 	}
 
@@ -40,6 +46,8 @@ public class Valuta {
 	}
 
 	public void setKupovniKurs(double kupovniKurs) {
+		if(kupovniKurs <= 0)
+			throw new RuntimeException("Nije odgovarajuci kurs");
 		this.kupovniKurs = kupovniKurs;
 	}
 
@@ -48,6 +56,8 @@ public class Valuta {
 	}
 
 	public void setSrednjiKurs(double srednjiKurs) {
+		if(srednjiKurs <= 0)
+			throw new RuntimeException("Nije odgovarajuci kurs");
 		this.srednjiKurs = srednjiKurs;
 	}
 
@@ -56,6 +66,8 @@ public class Valuta {
 	}
 
 	public void setProdajniKurs(double prodajniKurs) {
+		if(prodajniKurs <= 0)
+			throw new RuntimeException("Nije odgovarajuci kurs");
 		this.prodajniKurs = prodajniKurs;
 	}
 
