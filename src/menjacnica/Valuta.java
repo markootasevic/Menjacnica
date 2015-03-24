@@ -43,9 +43,10 @@ public class Valuta {
 		if (danas.get(Calendar.YEAR) == datum.get(Calendar.YEAR)
 				&& danas.get(Calendar.DAY_OF_YEAR) == datum
 						.get(Calendar.DAY_OF_YEAR))
+			this.datum = datum;
+		else 
 			throw new RuntimeException(
 					"Nije moguce uneti kurs za dan koji je u buducnosti ili u proslosti,vec se mora uneti na dati dan");
-		this.datum = datum;
 	}
 
 	public double getKupovniKurs() {
